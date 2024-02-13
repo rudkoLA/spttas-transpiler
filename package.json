@@ -1,6 +1,6 @@
 {
-  "name": "srctas-transpiler",
-  "displayName": "srctas-transpiler",
+  "name": "spttas-transpiler",
+  "displayName": "spttas-transpiler",
   "description": "A transpiler from the .p2tas tasing format to the .srctas tasing format.",
   "version": "0.0.1",
   "engines": {
@@ -14,7 +14,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "srctas-transpiler.compile",
+        "command": "spttas-transpiler.compile",
         "title": "Compile"
       }
     ]
