@@ -48,6 +48,7 @@ export type TFramebulk = {
     LGAGST: TFToggle; // spt_tas_strafe_lgagst 1
     usespam: TFToggle; // +spt_spam use
     duckspam: TFToggle; // +spt_spam duck
+    saveload: null | string;
   };
   movement: {
     forward: TFHold; // +forward

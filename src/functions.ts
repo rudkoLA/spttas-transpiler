@@ -138,6 +138,7 @@ export const convertToTFramebulk = (
       LGAGST: "keep",
       duckspam: "keep",
       usespam: "keep",
+      saveload: null,
     },
     movement: {
       forward: "keep",
@@ -257,11 +258,11 @@ export const convertToTFramebulk = (
     tools.forEach((tool) => {
       if (tool === "") {
         return;
-      } else if (tool.includes("strafe") || tool.includes("absmov")) {
+      } else if (tool.startsWith("strafe") || tool.startsWith("absmov")) {
         framebulk.tools.strafe = toolToTFStrafe(tool);
-      } else if (tool.includes("setang") || tool.includes("autoaim")) {
+      } else if (tool.startsWith("setang") || tool.startsWith("autoaim")) {
         framebulk.tools.setang = toolToTFSetang(tool);
-      } else if (tool.includes("autojump")) {
+      } else if (tool.startsWith("autojump")) {
         if (tool.includes("off")) {
           framebulk.tools.autojump = 0;
         } else if (tool.includes("on")) {
@@ -293,6 +294,9 @@ export const convertToTFramebulk = (
         } else {
           framebulk.tools.LGAGST = "off";
         }
+      } else if (tool.startsWith("saveload")) {
+        const saveName = tool.replace("saveload ", "");
+        framebulk.tools.saveload = saveName;
       }
     });
   }
@@ -391,6 +395,7 @@ const getUsespamAF = (usespam: TFToggle): string => {
   }
   return "";
 };
+
 const getDuckspamAF = (duckspam: TFToggle): string => {
   if (duckspam === "keep") {
     return "";
@@ -398,6 +403,13 @@ const getDuckspamAF = (duckspam: TFToggle): string => {
     return "+spt_spam duck; ";
   } else if (duckspam === "off") {
     return "-spt_spam duck; ";
+  }
+  return "";
+};
+
+const getSaveloadAF = (saveload: TFramebulk["tools"]["saveload"]): string => {
+  if (saveload) {
+    return `save ${saveload}; load ${saveload}; spt_afterframes_await_load`;
   }
   return "";
 };
@@ -429,5 +441,11 @@ export const convertToAfterFrames = (framebulk: TFramebulk) => {
     framebulk.tools.strafe
   )}${getAutojumpAF(framebulk.tools.autojump)}${getJumpAF(
     framebulk.tools.jump
-  )}${getSetangAF(framebulk.tools.setang)}${framebulk.commands}\"`;
+  )}${getSetangAF(framebulk.tools.setang)}${framebulk.commands}${getSaveloadAF(
+    framebulk.tools.saveload
+  )}\"`;
 };
+
+// export const convertOtherLines = (line: string): string => {
+//   return line;
+// };
