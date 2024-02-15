@@ -272,16 +272,6 @@ export const convertToTFramebulk = (
         } else if (tool.includes("gl")) {
           framebulk.tools.autojump = 3;
         }
-      } else if (tool.startsWith("jump")) {
-        if (tool.includes("on")) {
-          framebulk.tools.jump = 1;
-        } else if (tool.includes("oe")) {
-          framebulk.tools.jump = 2;
-        } else if (tool.includes("gl")) {
-          framebulk.tools.jump = 3;
-        } else {
-          framebulk.tools.jump = 0;
-        }
       } else if (tool.startsWith("jumpbug")) {
         if (tool.includes("on")) {
           framebulk.tools.jumpbug = "on";
@@ -293,6 +283,16 @@ export const convertToTFramebulk = (
           framebulk.tools.LGAGST = "on";
         } else {
           framebulk.tools.LGAGST = "off";
+        }
+      } else if (tool.startsWith("jump")) {
+        if (tool.includes("on")) {
+          framebulk.tools.jump = 1;
+        } else if (tool.includes("oe")) {
+          framebulk.tools.jump = 2;
+        } else if (tool.includes("gl")) {
+          framebulk.tools.jump = 3;
+        } else {
+          framebulk.tools.jump = 0;
         }
       } else if (tool.startsWith("saveload")) {
         const saveName = tool.replace("saveload ", "");
@@ -351,6 +351,9 @@ const getSetangAF = (setang: TFramebulk["tools"]["setang"]): string => {
 };
 
 const getTFHoldAF = (status: TFHold, key: TFHoldKeys): string => {
+  if (["left", "right", "up", "down"].includes(key)) {
+    key = "move" + key;
+  }
   if (status === "keep") {
     return "";
   } else if (status === "on") {
@@ -445,7 +448,3 @@ export const convertToAfterFrames = (framebulk: TFramebulk) => {
     framebulk.tools.saveload
   )}\"`;
 };
-
-// export const convertOtherLines = (line: string): string => {
-//   return line;
-// };
