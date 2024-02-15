@@ -316,9 +316,12 @@ const getStrafeAF = (strafe: TFramebulk["tools"]["strafe"]): string => {
 };
 
 const getAutojumpAF = (autojump: TFramebulk["tools"]["autojump"]): string => {
-  return autojump === "keep"
-    ? ""
-    : `spt_autojump 1; spt_tas_strafe_jumptype ${autojump}; `;
+  if (autojump === "keep") {
+    return "";
+  } else if (autojump === "off") {
+    return `spt_autojump 0; spt_tas_strafe_jumptype 0; -jump`;
+  }
+  return `spt_autojump 1; spt_tas_strafe_jumptype ${autojump}; +jump`;
 };
 
 const getJumpAF = (jump: TFramebulk["tools"]["jump"]): string => {
