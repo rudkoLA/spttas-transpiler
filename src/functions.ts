@@ -19,10 +19,10 @@ const toolToTFStrafe = (tool: string): TFStrafe | "off" | "keep" => {
   const ups = tool.match(/\b(\d+(\.\d+)?)ups\b/);
   const hasAng = tool.includes("ang");
 
-  if (absmov && absmovArgs[0]) {
-    return { type: 3, angle: +absmovArgs[0] };
-  } else if (absmov && absmovArgs[0] && absmovArgs[1]) {
+  if (absmov && absmovArgs[0] && absmovArgs[1]) {
     return { type: 4, angle: +absmovArgs[0], scale: +absmovArgs[1] };
+  } else if (absmov && absmovArgs[0]) {
+    return { type: 3, angle: +absmovArgs[0] };
   } else if (absmov && deg) {
     return { type: 3, angle: +deg[1] };
   } else if (strafe && deg && ups) {
