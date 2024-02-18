@@ -13,14 +13,16 @@ const toolToTFStrafe = (tool: string): TFStrafe | "off" | "keep" => {
   }
 
   const absmov = tool.includes("absmov");
-  const absmovDeg = +tool.replace("absmov ", "");
+  const absmovArgs = tool.replace("absmov ", "").split(" ");
   const strafe = tool.includes("strafe");
   const deg = tool.match(/\b(\d+(\.\d+)?)deg\b/);
   const ups = tool.match(/\b(\d+(\.\d+)?)ups\b/);
   const hasAng = tool.includes("ang");
 
-  if (absmov && absmovDeg) {
-    return { type: 3, angle: +absmovDeg };
+  if (absmov && absmovArgs[0]) {
+    return { type: 3, angle: +absmovArgs[0] };
+  } else if (absmov && absmovArgs[0] && absmovArgs[1]) {
+    return { type: 4, angle: +absmovArgs[0], scale: +absmovArgs[1] };
   } else if (absmov && deg) {
     return { type: 3, angle: +deg[1] };
   } else if (strafe && deg && ups) {
@@ -310,7 +312,9 @@ const getStrafeAF = (strafe: TFramebulk["tools"]["strafe"]): string => {
   } else if (strafe === "off") {
     return "spt_tas_strafe 0; spt_tas_strafe_type 0; spt_tas_strafe_yaw 0; spt_tas_strafe_capped_limit 10000; ";
   } else if (strafe.type === 2) {
-    return `spt_tas_strafe 1; spt_tas_strafe_type ${strafe.type}; spt_tas_strafe_yaw ${strafe.angle}; spt_tas_strafe_capped_limit ${strafe.upsCap}; `;
+    return `spt_tas_strafe 1; spt_tas_strafe_type 2; spt_tas_strafe_yaw ${strafe.angle}; spt_tas_strafe_capped_limit ${strafe.upsCap}; `;
+  } else if (strafe.type === 4) {
+    return `spt_tas_strafe 3; spt_tas_strafe_type 3; spt_tas_strafe_yaw ${strafe.angle}; spt_tas_strafe_scale ${strafe.scale}`;
   }
   return `spt_tas_strafe 1; spt_tas_strafe_type ${strafe.type}; spt_tas_strafe_yaw ${strafe.angle}; `;
 };

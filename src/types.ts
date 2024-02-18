@@ -1,26 +1,15 @@
 export type TFHold = "keep" | "on" | "off" | number;
 export type TFToggle = "keep" | "on" | "off";
 export type TFHoldKeys =
-  | "forward"
-  | "left"
-  | "right"
-  | "back"
-  | "up"
-  | "down"
-  | "jump"
-  | "duck"
-  | "use"
-  | "attack1"
-  | "attack2"
-  | "reload"
-  | "walk"
-  | "sprint";
+  | keyof TFramebulk["movement"]
+  | keyof TFramebulk["buttons"];
 
 export type TFStrafe =
   | { type: 0; angle: number } // spt_tas_strafe 1; spt_tas_strafe_type 0; spt_tas_strafe_yaw angle
   | { type: 1; angle: number } // spt_tas_strafe 1; spt_tas_strafe_type 1; spt_tas_strafe_yaw angle
   | { type: 2; angle: number; upsCap: number } // spt_tas_strafe 1; spt_tas_strafe_type 2; spt_tas_strafe_yaw angle; spt_tas_strafe_capped_limit upsCap
-  | { type: 3; angle: number }; // spt_tas_strafe 1; spt_tas_strafe_type 3; spt_tas_strafe_yaw angle
+  | { type: 3; angle: number } // spt_tas_strafe 1; spt_tas_strafe_type 3; spt_tas_strafe_yaw angle
+  | { type: 4; angle: number; scale: number }; // spt_tas_strafe 1; spt_tas_strafe_type 3; spt_tas_strafe_yaw angle; spt_tas_strafe_scale
 
 export type TFSetang =
   | { type: 0; pitch: number; yaw: number } // spt_tas_aim pitch yaw
