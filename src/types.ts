@@ -55,7 +55,7 @@ export type TFramebulk = {
     attack2: TFHold; // +attack2
     reload: TFHold; // +reload
     walk: TFHold; // +walk
-    sprint: TFHold; // +sprint
+    speed: TFHold; // +speed
   };
   ATick: number; // spt_afterticks
   commands: string;

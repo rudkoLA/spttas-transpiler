@@ -158,7 +158,7 @@ export const convertToTFramebulk = (
       attack2: "keep",
       reload: "keep",
       walk: "keep",
-      sprint: "keep",
+      speed: "keep",
     },
     ATick: ATick,
     commands: "",
@@ -225,8 +225,8 @@ export const convertToTFramebulk = (
           ["R", "reload", "on"] as const,
           ["w", "walk", "off"] as const,
           ["W", "walk", "on"] as const,
-          ["s", "sprint", "off"] as const,
-          ["S", "sprint", "on"] as const,
+          ["s", "speed", "off"] as const,
+          ["S", "speed", "on"] as const,
         ].forEach(([testButton, path, value]) => {
           if (button.includes(testButton)) {
             if (button.length > 1) {
