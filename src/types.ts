@@ -51,7 +51,7 @@ export type TFramebulk = {
     jump: TFHold; // +jump
     duck: TFHold; // +duck
     use: TFHold; // +use
-    attack1: TFHold; // +attack1
+    attack: TFHold; // +attack
     attack2: TFHold; // +attack2
     reload: TFHold; // +reload
     walk: TFHold; // +walk
