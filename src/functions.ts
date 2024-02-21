@@ -266,6 +266,8 @@ export const convertToTFramebulk = (
         framebulk.tools.setang = toolToTFSetang(tool);
       } else if (tool.startsWith("autojump")) {
         if (tool.includes("off")) {
+          framebulk.tools.autojump = "off";
+        } else if (tool.includes("nm")) {
           framebulk.tools.autojump = 0;
         } else if (tool.includes("on")) {
           framebulk.tools.autojump = 1;
