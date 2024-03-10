@@ -15,8 +15,8 @@ const toolToTFStrafe = (tool: string): TFStrafe | "off" | "keep" => {
   const absmov = tool.includes("absmov");
   const absmovArgs = tool.replace("absmov ", "").split(" ");
   const strafe = tool.includes("strafe");
-  const deg = tool.match(/\b(\d+(\.\d+)?)deg\b/);
-  const ups = tool.match(/\b(\d+(\.\d+)?)ups\b/);
+  const deg = tool.match(/(-?\d+(\.\d+)?)deg/);
+  const ups = tool.match(/(-?\d+(\.\d+)?)ups/);
   const hasAng = tool.includes("ang");
 
   if (absmov && absmovArgs[0] && absmovArgs[1]) {
