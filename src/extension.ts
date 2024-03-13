@@ -36,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
     const newFilePath =
       vscode.window.activeTextEditor.document.fileName.replace(
         ".p2tas",
-        ".cfg"
+        ".srctas"
       );
 
     const file = await fsPromise.open(filePath, "r");

@@ -443,7 +443,7 @@ export const convertToAfterFrames = (framebulk: TFramebulk) => {
     return getTFHoldAF(framebulk.buttons[buttons], buttons as TFHoldKeys);
   }).join("");
 
-  return `spt_afterframes ${
+  return `|||-|-|0|spt_afterframes ${
     framebulk.ATick
   } \"${FHoldMovementKeysAF}${FHoldButtonsKeysAF}${getJumpbugAF(
     framebulk.tools.jumpbug
