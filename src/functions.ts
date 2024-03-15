@@ -141,6 +141,7 @@ export const convertToTFramebulk = (
       duckspam: "keep",
       usespam: "keep",
       saveload: null,
+      awaitload: false,
     },
     movement: {
       forward: "keep",
@@ -251,9 +252,11 @@ export const convertToTFramebulk = (
   const lineRegexMatch = line.match(/>.*?\|.*?\|.*?\|.*?\|(.*)/);
 
   if (line.includes(">>")) {
-    tools = line.substring(line.indexOf(">>") + 2, line.length).split("; ");
+    tools = line.substring(line.indexOf(">>") + 2, line.length).split(";");
+    tools = tools.map((tool) => tool.trim());
   } else if (lineRegexMatch) {
-    tools = lineRegexMatch[1].split("; ");
+    tools = lineRegexMatch[1].split(";");
+    tools = tools.map((tool) => tool.trim());
   }
 
   if (tools && tools.length) {
@@ -301,10 +304,11 @@ export const convertToTFramebulk = (
       } else if (tool.startsWith("saveload")) {
         const saveName = tool.replace("saveload ", "");
         framebulk.tools.saveload = saveName;
+      } else if (tool.startsWith("awaitload")) {
+        framebulk.tools.awaitload = true;
       }
     });
   }
-  // console.log(framebulk);
   return framebulk;
 };
 
@@ -325,9 +329,9 @@ const getAutojumpAF = (autojump: TFramebulk["tools"]["autojump"]): string => {
   if (autojump === "keep") {
     return "";
   } else if (autojump === "off") {
-    return `spt_autojump 0; spt_tas_strafe_jumptype 0; -jump`;
+    return `spt_autojump 0; spt_tas_strafe_jumptype 0; -jump; `;
   }
-  return `spt_autojump 1; spt_tas_strafe_jumptype ${autojump}; +jump`;
+  return `spt_autojump 1; spt_tas_strafe_jumptype ${autojump}; +jump; `;
 };
 
 const getJumpAF = (jump: TFramebulk["tools"]["jump"]): string => {
@@ -455,5 +459,5 @@ export const convertToAfterFrames = (framebulk: TFramebulk) => {
     framebulk.tools.jump
   )}${getSetangAF(framebulk.tools.setang)}${framebulk.commands}${getSaveloadAF(
     framebulk.tools.saveload
-  )}\"`;
+  )}${framebulk.tools.awaitload ? "spt_afterframes_await_load" : ""}\"`;
 };

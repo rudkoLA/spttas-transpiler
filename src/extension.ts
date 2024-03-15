@@ -42,8 +42,21 @@ export function activate(context: vscode.ExtensionContext) {
     const file = await fsPromise.open(filePath, "r");
 
     for await (const line of file.readLines()) {
+      if (line.startsWith("skipto")) {
+        const tick = +line.replace("skipto", "").trim();
+        if (!Number.isNaN(tick)) {
+          lines.push(`|||-|-|${tick}|`);
+        }
+        continue;
+      }
+
       if (line.startsWith("//") || !line.includes(">")) {
         lines.push(line);
+        continue;
+      }
+
+      if (line.startsWith("0>|||")) {
+        lines.push("|||-|-|0|" + line.substring(5, line.length));
         continue;
       }
 
