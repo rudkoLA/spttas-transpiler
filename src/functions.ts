@@ -459,5 +459,5 @@ export const convertToAfterFrames = (framebulk: TFramebulk) => {
     framebulk.tools.jump
   )}${getSetangAF(framebulk.tools.setang)}${framebulk.commands}${getSaveloadAF(
     framebulk.tools.saveload
-  )}${framebulk.tools.awaitload ? "spt_afterframes_await_load" : ""}\"`;
+  )}${framebulk.tools.awaitload ? "spt_afterframes_await_load; " : ""}\"`;
 };
