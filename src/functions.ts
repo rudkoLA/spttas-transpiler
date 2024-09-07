@@ -430,7 +430,10 @@ const getSaveloadAF = (saveload: TFramebulk["tools"]["saveload"]): string => {
   return "";
 };
 
-export const convertToAfterFrames = (framebulk: TFramebulk) => {
+export const convertToAfterFrames = (
+  framebulk: TFramebulk,
+  waitTick: number
+) => {
   const FHoldMovementKeys = Object.keys(
     framebulk.movement
   ) as (keyof TFramebulk["movement"])[];
@@ -447,8 +450,8 @@ export const convertToAfterFrames = (framebulk: TFramebulk) => {
     return getTFHoldAF(framebulk.buttons[buttons], buttons as TFHoldKeys);
   }).join("");
 
-  return `|||-|-|0|spt_afterframes ${
-    framebulk.ATick
+  return `|||-|-|1|spt_afterframes ${
+    framebulk.ATick - waitTick
   } \"${FHoldMovementKeysAF}${FHoldButtonsKeysAF}${getJumpbugAF(
     framebulk.tools.jumpbug
   )}${getLGAGSTAF(framebulk.tools.LGAGST)}${getUsespamAF(

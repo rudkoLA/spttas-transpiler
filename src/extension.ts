@@ -32,6 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     const lines: Array<TFramebulk | string> = [];
     let aTick = 0;
+    let waitTick = 0;
 
     const newFilePath =
       vscode.window.activeTextEditor.document.fileName.replace(
@@ -45,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
       if (line.startsWith("skipto")) {
         const tick = +line.replace("skipto", "").trim();
         if (!Number.isNaN(tick)) {
-          lines.push(`|||-|-|${tick}|`);
+          lines.push(`|||-|-|${tick - waitTick}|`);
         }
         continue;
       }
@@ -56,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       if (line.startsWith("0>|||")) {
-        lines.push("|||-|-|0|" + line.substring(5, line.length));
+        lines.push("|||-|-|1|" + line.substring(5, line.length));
         continue;
       }
 
@@ -67,10 +68,10 @@ export function activate(context: vscode.ExtensionContext) {
 
       if (line.startsWith("+")) {
         aTick += lineTick;
-        lines.push(convertToAfterFrames(convertToTFramebulk(line, aTick)));
+        lines.push(convertToAfterFrames(convertToTFramebulk(line, aTick), ++waitTick));
       } else {
         aTick = lineTick;
-        lines.push(convertToAfterFrames(convertToTFramebulk(line, aTick)));
+        lines.push(convertToAfterFrames(convertToTFramebulk(line, aTick), ++waitTick));
       }
     }
     fs.writeFileSync(newFilePath, lines.join("\n"));
