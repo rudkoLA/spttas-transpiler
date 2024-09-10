@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 import * as fsPromise from "fs/promises";
 import * as fs from "fs";
 import { TFramebulk } from "./types";
-import { convertToAfterFrames, convertToTFramebulk } from "./functions";
+import { convertToafterticks, convertToTFramebulk } from "./functions";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -68,10 +68,14 @@ export function activate(context: vscode.ExtensionContext) {
 
       if (line.startsWith("+")) {
         aTick += lineTick;
-        lines.push(convertToAfterFrames(convertToTFramebulk(line, aTick), ++waitTick));
+        lines.push(
+          convertToafterticks(convertToTFramebulk(line, aTick), ++waitTick)
+        );
       } else {
         aTick = lineTick;
-        lines.push(convertToAfterFrames(convertToTFramebulk(line, aTick), ++waitTick));
+        lines.push(
+          convertToafterticks(convertToTFramebulk(line, aTick), ++waitTick)
+        );
       }
     }
     fs.writeFileSync(newFilePath, lines.join("\n"));

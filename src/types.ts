@@ -30,7 +30,7 @@ export type TFSetang =
 export type TFramebulk = {
   tools: {
     strafe: "keep" | "off" | TFStrafe; // spt_tas_strafe 0
-    jump: "keep" | 0 | 1 | 2 | 3; // +jump spt_tas_strafe_jumptype 0 | 1 | 2 | 3 // afterframes tick +jump; afterframes tick+1 -jump
+    jump: "keep" | 0 | 1 | 2 | 3; // +jump spt_tas_strafe_jumptype 0 | 1 | 2 | 3 // afterticks tick +jump; afterticks tick+1 -jump
     autojump: "keep" | "off" | 0 | 1 | 2 | 3; // spt_autojump 1; spt_tas_strafe_jumptype 0 | 1 | 2 | 3
     setang: "keep" | "off" | TFSetang; // spt_tas_anglespeed 1000; spt_tas_aim_reset
     jumpbug: TFToggle; // spt_tas_strafe_autojb 1

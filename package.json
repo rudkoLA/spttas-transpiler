@@ -1,7 +1,7 @@
 {
   "name": "spttas-transpiler",
   "displayName": "spttas-transpiler",
-  "description": "A transpiler from the .p2tas tasing format to the spt afterframes tasing format.",
+  "description": "A transpiler from the .p2tas tasing format to the spt afterticks tasing format.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.86.0"

@@ -337,7 +337,7 @@ const getAutojumpAF = (autojump: TFramebulk["tools"]["autojump"]): string => {
 const getJumpAF = (jump: TFramebulk["tools"]["jump"]): string => {
   return jump === "keep"
     ? ""
-    : `spt_tas_strafe_jumptype ${jump}; +jump; spt_afterframes 1 -jump; `;
+    : `spt_tas_strafe_jumptype ${jump}; +jump; spt_afterticks 1 -jump; `;
 };
 
 const getSetangAF = (setang: TFramebulk["tools"]["setang"]): string => {
@@ -374,7 +374,7 @@ const getTFHoldAF = (status: TFHold, key: TFHoldKeys): string => {
   } else if (status === "off") {
     return `-${key}; `;
   } else if (status >= 1) {
-    return `+${key}; spt_afterframes ${status} -${key}; `;
+    return `+${key}; spt_afterticks ${status} -${key}; `;
   }
   return "";
 };
@@ -425,12 +425,12 @@ const getDuckspamAF = (duckspam: TFToggle): string => {
 
 const getSaveloadAF = (saveload: TFramebulk["tools"]["saveload"]): string => {
   if (saveload) {
-    return `save ${saveload}; load ${saveload}; spt_afterframes_await_load`;
+    return `save ${saveload}; load ${saveload}; spt_afterticks_await_load`;
   }
   return "";
 };
 
-export const convertToAfterFrames = (
+export const convertToafterticks = (
   framebulk: TFramebulk,
   waitTick: number
 ) => {
@@ -450,7 +450,7 @@ export const convertToAfterFrames = (
     return getTFHoldAF(framebulk.buttons[buttons], buttons as TFHoldKeys);
   }).join("");
 
-  return `|||-|-|1|spt_afterframes ${
+  return `|||-|-|1|spt_afterticks ${
     framebulk.ATick - waitTick
   } \"${FHoldMovementKeysAF}${FHoldButtonsKeysAF}${getJumpbugAF(
     framebulk.tools.jumpbug
@@ -462,5 +462,5 @@ export const convertToAfterFrames = (
     framebulk.tools.jump
   )}${getSetangAF(framebulk.tools.setang)}${framebulk.commands}${getSaveloadAF(
     framebulk.tools.saveload
-  )}${framebulk.tools.awaitload ? "spt_afterframes_await_load; " : ""}\"`;
+  )}${framebulk.tools.awaitload ? "spt_afterticks_await_load; " : ""}\"`;
 };
