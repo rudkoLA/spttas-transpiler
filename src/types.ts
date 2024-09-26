@@ -38,7 +38,7 @@ export type TFramebulk = {
     usespam: TFToggle; // +spt_spam use
     duckspam: TFToggle; // +spt_spam duck
     saveload: null | string;
-    awaitload: true | false;
+    awaitload: boolean;
   };
   movement: {
     forward: TFHold; // +forward
@@ -57,6 +57,7 @@ export type TFramebulk = {
     reload: TFHold; // +reload
     walk: TFHold; // +walk
     speed: TFHold; // +speed
+    zoom: TFHold; // +zoom
   };
   ATick: number; // spt_afterticks
   commands: string;

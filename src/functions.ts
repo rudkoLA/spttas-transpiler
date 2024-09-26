@@ -160,6 +160,7 @@ export const convertToTFramebulk = (
       reload: "keep",
       walk: "keep",
       speed: "keep",
+      zoom: "keep",
     },
     ATick: ATick,
     commands: "",
@@ -228,6 +229,8 @@ export const convertToTFramebulk = (
           ["W", "walk", "on"] as const,
           ["s", "speed", "off"] as const,
           ["S", "speed", "on"] as const,
+          ["z", "zoom", "off"] as const,
+          ["Z", "zoom", "on"] as const,
         ].forEach(([testButton, path, value]) => {
           if (button.includes(testButton)) {
             if (button.length > 1) {
@@ -270,9 +273,9 @@ export const convertToTFramebulk = (
       } else if (tool.startsWith("autojump")) {
         if (tool.includes("off")) {
           framebulk.tools.autojump = "off";
-        } else if (tool.includes("nm")) {
-          framebulk.tools.autojump = 0;
         } else if (tool.includes("on")) {
+          framebulk.tools.autojump = 0;
+        } else if (tool.includes("ah")) {
           framebulk.tools.autojump = 1;
         } else if (tool.includes("oe")) {
           framebulk.tools.autojump = 2;
@@ -292,7 +295,7 @@ export const convertToTFramebulk = (
           framebulk.tools.LGAGST = "off";
         }
       } else if (tool.startsWith("jump")) {
-        if (tool.includes("on")) {
+        if (tool.includes("ah")) {
           framebulk.tools.jump = 1;
         } else if (tool.includes("oe")) {
           framebulk.tools.jump = 2;
