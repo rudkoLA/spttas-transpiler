@@ -315,7 +315,7 @@ export const convertToTFramebulk = (
   return framebulk;
 };
 
-const getStrafeAF = (strafe: TFramebulk["tools"]["strafe"]): string => {
+const getStrafeAT = (strafe: TFramebulk["tools"]["strafe"]): string => {
   if (strafe === "keep") {
     return "";
   } else if (strafe === "off") {
@@ -328,7 +328,7 @@ const getStrafeAF = (strafe: TFramebulk["tools"]["strafe"]): string => {
   return `spt_tas_strafe 1; spt_tas_strafe_type ${strafe.type}; spt_tas_strafe_yaw ${strafe.angle}; `;
 };
 
-const getAutojumpAF = (autojump: TFramebulk["tools"]["autojump"]): string => {
+const getAutojumpAT = (autojump: TFramebulk["tools"]["autojump"]): string => {
   if (autojump === "keep") {
     return "";
   } else if (autojump === "off") {
@@ -337,13 +337,13 @@ const getAutojumpAF = (autojump: TFramebulk["tools"]["autojump"]): string => {
   return `spt_autojump 1; spt_tas_strafe_jumptype ${autojump}; +jump; `;
 };
 
-const getJumpAF = (jump: TFramebulk["tools"]["jump"]): string => {
+const getJumpAT = (jump: TFramebulk["tools"]["jump"]): string => {
   return jump === "keep"
     ? ""
     : `spt_tas_strafe_jumptype ${jump}; +jump; spt_afterticks 1 -jump; `;
 };
 
-const getSetangAF = (setang: TFramebulk["tools"]["setang"]): string => {
+const getSetangAT = (setang: TFramebulk["tools"]["setang"]): string => {
   if (setang === "keep") {
     return "";
   } else if (setang === "off") {
@@ -366,7 +366,7 @@ const getSetangAF = (setang: TFramebulk["tools"]["setang"]): string => {
   return "";
 };
 
-const getTFHoldAF = (status: TFHold, key: TFHoldKeys): string => {
+const getTFHoldAT = (status: TFHold, key: TFHoldKeys): string => {
   if (["left", "right", "up", "down"].includes(key)) {
     key = "move" + key;
   }
@@ -382,7 +382,7 @@ const getTFHoldAF = (status: TFHold, key: TFHoldKeys): string => {
   return "";
 };
 
-const getJumpbugAF = (jumpbug: TFToggle): string => {
+const getJumpbugAT = (jumpbug: TFToggle): string => {
   if (jumpbug === "keep") {
     return "";
   } else if (jumpbug === "on") {
@@ -393,7 +393,7 @@ const getJumpbugAF = (jumpbug: TFToggle): string => {
   return "";
 };
 
-const getLGAGSTAF = (LGAGST: TFToggle): string => {
+const getLGAGSTAT = (LGAGST: TFToggle): string => {
   if (LGAGST === "keep") {
     return "";
   } else if (LGAGST === "on") {
@@ -404,7 +404,7 @@ const getLGAGSTAF = (LGAGST: TFToggle): string => {
   return "";
 };
 
-const getUsespamAF = (usespam: TFToggle): string => {
+const getUsespamAT = (usespam: TFToggle): string => {
   if (usespam === "keep") {
     return "";
   } else if (usespam === "on") {
@@ -415,7 +415,7 @@ const getUsespamAF = (usespam: TFToggle): string => {
   return "";
 };
 
-const getDuckspamAF = (duckspam: TFToggle): string => {
+const getDuckspamAT = (duckspam: TFToggle): string => {
   if (duckspam === "keep") {
     return "";
   } else if (duckspam === "on") {
@@ -426,17 +426,14 @@ const getDuckspamAF = (duckspam: TFToggle): string => {
   return "";
 };
 
-const getSaveloadAF = (saveload: TFramebulk["tools"]["saveload"]): string => {
+const getSaveloadAT = (saveload: TFramebulk["tools"]["saveload"]): string => {
   if (saveload) {
     return `save ${saveload}; load ${saveload}; spt_afterticks_await_load`;
   }
   return "";
 };
 
-export const convertToafterticks = (
-  framebulk: TFramebulk,
-  waitTick: number
-) => {
+export const convertToCFG = (framebulk: TFramebulk) => {
   const FHoldMovementKeys = Object.keys(
     framebulk.movement
   ) as (keyof TFramebulk["movement"])[];
@@ -445,25 +442,25 @@ export const convertToafterticks = (
     framebulk.buttons
   ) as (keyof TFramebulk["buttons"])[];
 
-  const FHoldMovementKeysAF = FHoldMovementKeys.map((movement) => {
-    return getTFHoldAF(framebulk.movement[movement], movement as TFHoldKeys);
+  const FHoldMovementKeysAT = FHoldMovementKeys.map((movement) => {
+    return getTFHoldAT(framebulk.movement[movement], movement as TFHoldKeys);
   }).join("");
 
-  const FHoldButtonsKeysAF = FHoldButtonsKeys.map((buttons) => {
-    return getTFHoldAF(framebulk.buttons[buttons], buttons as TFHoldKeys);
+  const FHoldButtonsKeysAT = FHoldButtonsKeys.map((buttons) => {
+    return getTFHoldAT(framebulk.buttons[buttons], buttons as TFHoldKeys);
   }).join("");
 
-  return `|||-|-|1|spt_afterticks ${
-    framebulk.ATick - waitTick
-  } \"${FHoldMovementKeysAF}${FHoldButtonsKeysAF}${getJumpbugAF(
+  return `spt_afterticks ${
+    framebulk.ATick
+  } \"${FHoldMovementKeysAT}${FHoldButtonsKeysAT}${getJumpbugAT(
     framebulk.tools.jumpbug
-  )}${getLGAGSTAF(framebulk.tools.LGAGST)}${getUsespamAF(
+  )}${getLGAGSTAT(framebulk.tools.LGAGST)}${getUsespamAT(
     framebulk.tools.usespam
-  )}${getDuckspamAF(framebulk.tools.duckspam)}${getStrafeAF(
+  )}${getDuckspamAT(framebulk.tools.duckspam)}${getStrafeAT(
     framebulk.tools.strafe
-  )}${getAutojumpAF(framebulk.tools.autojump)}${getJumpAF(
+  )}${getAutojumpAT(framebulk.tools.autojump)}${getJumpAT(
     framebulk.tools.jump
-  )}${getSetangAF(framebulk.tools.setang)}${framebulk.commands}${getSaveloadAF(
+  )}${getSetangAT(framebulk.tools.setang)}${framebulk.commands}${getSaveloadAT(
     framebulk.tools.saveload
   )}${framebulk.tools.awaitload ? "spt_afterticks_await_load; " : ""}\"`;
 };
