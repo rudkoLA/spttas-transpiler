@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import * as fsPromise from "fs/promises";
 import * as fs from "fs";
-import { TFramebulk } from "./types";
 import { convertToCFG, convertToTFramebulk } from "./functions";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -65,6 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
       "spt_record_stop",
       "spt_afterticks_await_load",
       "host_framerate 0.015",
+      "mat_norendering 0",
     ];
 
     let aTick = 0;
@@ -147,8 +147,11 @@ export function activate(context: vscode.ExtensionContext) {
         `spt_afterticks ${skipToTick} "spt_cvar fps_max 66.666666666666"`,
         `spt_afterticks ${skipToTick} "spt_cvar mat_norendering 0"`
       );
-    } else if (playBackSpeed) {
-      lines.push(`spt_cvar fps_max ${66.666666666666 * playBackSpeed}`);
+    } else {
+      lines.push(
+        `spt_cvar fps_max ${66.666666666666 * (playBackSpeed || 1)}`,
+        "mat_norendering 0"
+      );
     }
 
     fs.writeFileSync(newFilePath, lines.join("\n"));
