@@ -362,6 +362,8 @@ const getSetangAT = (setang: TFramebulk["tools"]["setang"]): string => {
     return `spt_tas_aim_ent ${setang.index} ${setang.x} ${setang.y} ${setang.z}; `;
   } else if (setang.type === 6) {
     return `spt_tas_aim_ent ${setang.index} ${setang.x} ${setang.y} ${setang.z} ${setang.smoothing}; `;
+  } else if (setang.type === 7) {
+    return `spt_tas_aim ${setang.pitch} ${setang.yaw} ${setang.smoothing} ${setang.cone};`;
   }
   return "";
 };

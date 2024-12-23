@@ -25,7 +25,14 @@ export type TFSetang =
       y: number;
       z: number;
       smoothing: number;
-    }; // spt_tas_aim_ent index x y z smoothing
+    } // spt_tas_aim_ent index x y z smoothing
+  | {
+      type: 7;
+      pitch: number;
+      yaw: number;
+      smoothing: number;
+      cone: number;
+    }; // spt_tas_aim pitch yaw smoothing cone
 
 export type TFramebulk = {
   tools: {
