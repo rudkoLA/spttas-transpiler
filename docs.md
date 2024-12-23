@@ -8,7 +8,7 @@ Load SPT. Then use the command:
 
 - `exec <script path>`
 
-The path is relative to the cfg directory inside of the game directory (hl2/portal/ep2/etc). The path is written without the extension(appended automatically). All `.p2tas` scripts will have a duplicate with the `.cfg` file extension.
+The path is relative to the cfg directory inside of the game directory (hl2/portal/ep2/etc). The path is written without the extension. All `.p2tas` scripts will have a duplicate with the `.cfg` file extension.
 
 ## Headers
 
