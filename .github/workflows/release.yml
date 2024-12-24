@@ -1,0 +1,35 @@
+name: Build and Release VSIX
+
+on:
+  # Trigger when a new release is published
+  release:
+    types: [published]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install VSCE and dependencies
+      run: |
+        npm install -g vsce
+        npm install
+
+    - name: Build VSIX package
+      run: vsce package
+
+    - name: Upload VSIX as release asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: "*.vsix"
+        asset_name: "my-extension-${{ github.event.release.tag_name }}.vsix"
+        asset_content_type: application/vsix

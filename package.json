@@ -3,6 +3,7 @@
   "displayName": "spttas-transpiler",
   "description": "A transpiler from the .p2tas tasing format to the spt afterticks tasing format.",
   "version": "0.0.1",
+  "publisher": "rudkoLA",
   "engines": {
     "vscode": "^1.86.0"
   },
