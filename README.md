@@ -24,5 +24,8 @@ To transpile a file from .p2tas to the SPT afterticks format, follow these steps
 
 **IMPORTANT!** Make sure to execute the "Compile" command every time you start a new vscode window so that your TAS is actually being converted and you're not running the same file without changes.
 
+## Documentation
+You can find the documentation for using this version of .p2tas [here](https://github.com/rudkoLA/spttas-transpiler/blob/main/docs.md).
+
 ## Contact
 For any questions or feedback, please open an issue on the [GitHub repository](https://github.com/rudkoLA/spttas-transpiler) or message p2tas directly on Discord.
